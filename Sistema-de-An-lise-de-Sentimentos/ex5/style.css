@@ -1,0 +1,124 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: sans-serif;
+    background: #f0f0f0;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 60px;
+    background: linear-gradient(90deg, #000 0%, #888 100%);
+    color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+
+header p {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 6px 14px;
+    transition: color 0.2s;
+}
+
+header p:hover {
+    color: #d4af37;
+}
+
+header p:first-child {
+    color: #d4af37;
+    border-bottom: 2px solid #d4af37;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 24px;
+    padding: 32px 40px;
+    align-items: start;
+}
+
+.column-1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.card, .card2, .card3, .card4 {
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover, .card2:hover, .card3:hover, .card4:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.card img, .card2 img, .card3 img, .card4 img {
+    width: 100%;
+    display: block;
+}
+
+.card p, .card2 p, .card3 p, .card4 p {
+    padding: 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.column-2 {
+    background: #222;
+    color: #ccc;
+    padding: 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.8;
+    position: sticky;
+    top: 80px;
+}
+
+footer {
+    background: #111;
+    color: #aaa;
+    padding: 40px;
+    margin-top: 40px;
+}
+
+footer h2 {
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: #d4af37;
+}
+
+footer hr {
+    border: none;
+    border-top: 1px solid #333;
+    margin-bottom: 20px;
+}
+
+footer div {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+footer div ul {
+    list-style: none;
+    font-size: 13px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+footer div ul:hover {
+    color: #d4af37;
+}
