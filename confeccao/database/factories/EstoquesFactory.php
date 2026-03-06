@@ -18,8 +18,8 @@ class EstoquesFactory extends Factory
     {
         return [
             'produto' => fake()->text(),
-            'quantidade' => fake()->text(),
-            'preco' => fake()->text(),
+            'quantidade' => fake()->numberBetween(1, 100),
+            'preco' => fake()->numberBetween(1, 9999),
             'descricao' => fake()->text(),
             'localizacao' => fake()->text(),
         ];

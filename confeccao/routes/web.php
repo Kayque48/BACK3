@@ -17,6 +17,8 @@ Route::get('/pedido', [PedidosController::class, 'index']) -> name('pedidos.inde
 
 Route::get('/fornecedor', [FornecedoresControllers::class, 'index']) -> name('fornecedores.index');
 
+Route::get('/produtos', [ProdutosControllers::class, 'index']) -> name('produtos.index');
+
 Route::get('/estoque', [EstoquesController::class, 'index']) -> name('estoques.index');
 
 Route::get('/dashboard', function () {
