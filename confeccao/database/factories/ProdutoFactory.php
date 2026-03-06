@@ -20,7 +20,7 @@ class ProdutoFactory extends Factory
             'nome' => fake()->name(),
             'descricao' => fake()->text(),
             'categoria' => fake()->text(),
-            'reserva' => fake()->text()
+            'reserva' => fake()->numberBetween(1,1000)
         ];
     }
 }

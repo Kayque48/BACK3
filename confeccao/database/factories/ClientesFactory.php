@@ -21,7 +21,7 @@ class ClientesFactory extends Factory
             'nome' => fake()->name(),
             'cpf' => fake()->unique()->text(),
             'telefone' => fake()->text(),
-            'reserva' => fake()->text(),
+            'reserva' => fake()->numberBetween(0,1),
         ];
     }
 }

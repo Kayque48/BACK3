@@ -6,6 +6,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PedidosController;
 use App\Http\Controllers\FornecedoresControllers;
 use App\Http\Controllers\EstoquesController;
+use App\Http\Controllers\ProdutoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,7 +18,7 @@ Route::get('/pedido', [PedidosController::class, 'index']) -> name('pedidos.inde
 
 Route::get('/fornecedor', [FornecedoresControllers::class, 'index']) -> name('fornecedores.index');
 
-Route::get('/produtos', [ProdutosControllers::class, 'index']) -> name('produtos.index');
+Route::get('/produtos', [ProdutoController::class, 'index']) -> name('produtos.index');
 
 Route::get('/estoque', [EstoquesController::class, 'index']) -> name('estoques.index');
 

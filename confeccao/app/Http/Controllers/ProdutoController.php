@@ -8,8 +8,8 @@ class ProdutoController extends Controller
 {
     public function index() {
 
-        $produto = \App\Models\ProdutoControllers::all();
-        return view('produto.index', compact('produto'));
+        $produto = \App\Models\Produto::all();
+        return view('produtos.index', compact('produto'));
         
     }
 }
