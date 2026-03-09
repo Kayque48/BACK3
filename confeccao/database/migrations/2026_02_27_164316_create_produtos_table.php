@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('descricao');
-            $table->text('categoria');
+            $table->integer('quantidade');
+            $table->decimal('preco', 10, 2);
             $table->integer('reserva');
             $table->timestamps();
         });

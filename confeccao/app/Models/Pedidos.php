@@ -8,5 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Pedidos extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome', 'categoria', 'descricao', 'preco', 'quantidade'];
+    protected $fillable = ['cliente_id', 'produto_id', 'quantidade', 'status'];
+
+    // app/Models/Pedidos.php
+
+    public function cliente() {
+        return $this->belongsTo(\App\Models\Clientes::class);
+    }
+
+    public function produto() {
+        return $this->belongsTo(\App\Models\Produto::class); // ajusta o nome do model se necessário
+    }
 }

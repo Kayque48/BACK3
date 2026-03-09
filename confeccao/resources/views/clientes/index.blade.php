@@ -9,10 +9,28 @@
 <body class="bg-gray-50">
     <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-6xl mx-auto">
-            <!-- Header -->
-            <div class="mb-8">
-                <h1 class="text-4xl font-bold text-gray-900">Lista de Clientes</h1>
-                <p class="text-gray-600 mt-2">Variáveis da tabela de clientes</p>
+          <!-- Header -->
+            <div class="mb-8 flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold text-gray-900">Lista de Clientes</h1>
+                    <p class="text-gray-600 mt-2">Variáveis da tabela de clientes</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('dashboard') }}"
+                    class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        Dashboard
+                    </a>
+                    <a href="{{ route('clientes.create') }}"
+                    class="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        Novo Cliente
+                    </a>
+                </div>
             </div>
 
             <!-- Table Card -->
@@ -25,6 +43,7 @@
                                 <th class="px-6 py-4 text-left text-sm font-semibold">Nome</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold">CPF</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold">Telefone</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">E-mail</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold">Reserva</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold">Criado em</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold">Atualizado em</th>
@@ -37,6 +56,7 @@
                                     <td class="px-6 py-4 text-sm text-gray-900">{{ $cliente->nome }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-600 font-mono">{{ $cliente->cpf }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-900">{{ $cliente->telefone }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">{{ $cliente->email }}</td>
                                     <td class="px-6 py-4 text-sm">
                                         <span class="px-3 py-1 rounded-full text-xs font-semibold @if($cliente->reserva) bg-green-100 text-green-800 @else bg-red-100 text-red-800 @endif">
                                             {{ $cliente->reserva ? 'Sim' : 'Não' }}
@@ -47,7 +67,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="px-6 py-8 text-center text-gray-500">
+                                    <td colspan="8" class="px-6 py-8 text-center text-gray-500">
                                         <p class="text-lg font-medium">Nenhum cliente cadastrado</p>
                                         <p class="text-sm mt-1">Insira dados de teste no banco de dados</p>
                                     </td>

@@ -17,10 +17,8 @@ class EstoquesFactory extends Factory
     public function definition(): array
     {
         return [
-            'produto' => fake()->text(),
-            'quantidade' => fake()->numberBetween(1, 100),
-            'preco' => fake()->numberBetween(1, 9999),
-            'descricao' => fake()->text(),
+            'produto_id' => fake()->randomElement(\App\Models\Produto::pluck('id')->toArray()),
+            'quantidade' => fake()->numberBetween(1, 1000),
             'localizacao' => fake()->text(),
         ];
     }

@@ -3,64 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estoque</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
-        .container { max-width: 1000px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #333; margin-bottom: 30px; }
-        .table-wrapper { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th { background: #8e44ad; color: #fff; padding: 15px; text-align: left; font-weight: bold; }
-        td { padding: 12px 15px; border-bottom: 1px solid #ddd; }
-        tr:hover { background: #f9f9f9; }
-        .produto { font-weight: bold; }
-        .quantidade { color: #e67e22; }
-        .preco { color: #27ae60; font-weight: bold; }
-        .localizacao { color: #2980b9; font-style: italic; }
-        .sem-estoque { text-align: center; padding: 40px; color: #999; }
-    </style>
+    <title>Estoque - Confecção</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>📦 Estoque de Produtos</h1>
-        @if($estoques->count() > 0)
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Produto</th>
-                            <th>Quantidade</th>
-                            <th>Preço</th>
-                            <th>Descrição</th>
-                            <th>Localização</th>
-                            <th>Atualizado em</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($estoques as $item)
+<body class="bg-gray-50">
+    <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+
+            <!-- Header -->
+            <div class="mb-8 flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold text-gray-900">Estoque de Produtos</h1>
+                    <p class="text-gray-600 mt-2">Variáveis da tabela de estoques</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('dashboard') }}"
+                       class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        Dashboard
+                    </a>
+                    <a href="{{ route('estoques.create') }}"
+                       class="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        Novo Registro
+                    </a>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-blue-600 text-white">
                             <tr>
-                                <td><strong>#{{ $item->id }}</strong></td>
-                                <td class="produto">{{ $item->produto }}</td>
-                                <td class="quantidade">{{ $item->quantidade }}</td>
-                                <td class="preco">R$ {{ number_format((float)$item->preco, 2, ',', '.') }}</td>
-                                <td>{{ Str::limit($item->descricao, 50) }}</td>
-                                <td class="localizacao">{{ $item->localizacao }}</td>
-                                <td>{{ $item->updated_at->format('d/m/Y H:i') }}</td>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">ID</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Produto</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Quantidade</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Localização</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Atualizado em</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            @forelse($estoques ?? [] as $item)
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->id }}</td>
+                                    <td class="px-6 py-4 text-sm font-semibold text-gray-900">{{ $item->produto->nome ?? $item->produto_id }}</td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold
+                                            @if($item->quantidade > 10) bg-green-100 text-green-800
+                                            @elseif($item->quantidade > 0) bg-yellow-100 text-yellow-800
+                                            @else bg-red-100 text-red-800
+                                            @endif">
+                                            {{ $item->quantidade }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-blue-600 italic">{{ $item->localizacao }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-600">{{ $item->updated_at->format('d/m/Y H:i') }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="px-6 py-8 text-center text-gray-500">
+                                        <p class="text-lg font-medium">Nenhum item em estoque</p>
+                                        <p class="text-sm mt-1">Insira dados de teste no banco de dados</p>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <p style="margin-top:20px; text-align:center; color:#666;">
-                Total de registros: <strong>{{ $estoques->count() }}</strong>
-            </p>
-        @else
-            <div class="sem-estoque">
-                <p>Nenhum item em estoque.</p>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-gray-600 text-sm font-semibold uppercase">Total de Registros</h3>
+                    <p class="text-3xl font-bold text-blue-600 mt-2">{{ $estoques->count() ?? 0 }}</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-gray-600 text-sm font-semibold uppercase">Em Estoque</h3>
+                    <p class="text-3xl font-bold text-green-600 mt-2">{{ $estoques->where('quantidade', '>', 0)->count() ?? 0 }}</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-gray-600 text-sm font-semibold uppercase">Sem Estoque</h3>
+                    <p class="text-3xl font-bold text-red-600 mt-2">{{ $estoques->where('quantidade', 0)->count() ?? 0 }}</p>
+                </div>
             </div>
-        @endif
+
+        </div>
     </div>
 </body>
 </html>

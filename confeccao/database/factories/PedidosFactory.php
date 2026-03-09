@@ -17,11 +17,10 @@ class PedidosFactory extends Factory
     public function definition(): array
     {
         return [
-            'nome' => fake()->name(),
-            'categoria' => fake()->text(),
-            'descricao' => fake()->text(),
-            'preco' => fake()->numberBetween(1, 9999),
+            'cliente_id' => fake()->randomElement(\App\Models\Clientes::pluck('id')->toArray()),
+            'produto_id' => fake()->randomElement(\App\Models\Produto::pluck('id')->toArray()),
             'quantidade' => fake()->numberBetween(1, 100),
+            'status' => fake()->randomElement(['pendente', 'processando', 'concluído']),
         ];
     }
 }

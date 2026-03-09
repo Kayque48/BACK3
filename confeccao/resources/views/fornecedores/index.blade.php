@@ -3,126 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fornecedores</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .table-wrapper {
-            overflow-x: auto;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        
-        th {
-            background-color: #34495e;
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: bold;
-        }
-        
-        td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        tr:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .email {
-            color: #3498db;
-        }
-        
-        .telefone {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-        
-        .cnpj {
-            font-family: monospace;
-            color: #7f8c8d;
-            font-size: 13px;
-        }
-        
-        .sem-fornecedores {
-            text-align: center;
-            padding: 40px;
-            color: #999;
-        }
-    </style>
+    <title>Fornecedores - Confecção</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>🏢 Lista de Fornecedores</h1>
-        
-        @if($fornecedores->count() > 0)
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>Telefone</th>
-                            <th>CNPJ</th>
-                            <th>Endereço</th>
-                            <th>Data de Cadastro</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($fornecedores as $fornecedor)
+<body class="bg-gray-50">
+    <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+
+            <!-- Header -->
+            <div class="mb-8 flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold text-gray-900">Lista de Fornecedores</h1>
+                    <p class="text-gray-600 mt-2">Variáveis da tabela de fornecedores</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('dashboard') }}"
+                       class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        Dashboard
+                    </a>
+                    <a href="{{ route('fornecedores.create') }}"
+                       class="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        Novo Fornecedor
+                    </a>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-blue-600 text-white">
                             <tr>
-                                <td><strong>#{{ $fornecedor->id }}</strong></td>
-                                <td>{{ $fornecedor->nome }}</td>
-                                <td class="email">{{ $fornecedor->email }}</td>
-                                <td class="telefone">{{ $fornecedor->telefone }}</td>
-                                <td class="cnpj">{{ $fornecedor->cnpj }}</td>
-                                <td>{{ Str::limit($fornecedor->endereco, 40) }}</td>
-                                <td>{{ $fornecedor->created_at->format('d/m/Y H:i') }}</td>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">ID</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Nome</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">E-mail</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Telefone</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">CNPJ</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Endereço</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Criado em</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            @forelse($fornecedores ?? [] as $fornecedor)
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $fornecedor->id }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">{{ $fornecedor->nome }}</td>
+                                    <td class="px-6 py-4 text-sm text-blue-600">{{ $fornecedor->email }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">{{ $fornecedor->telefone }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-600 font-mono">{{ $fornecedor->cnpj }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-600">{{ Str::limit($fornecedor->endereco, 40) }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-600">{{ $fornecedor->created_at->format('d/m/Y H:i') }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="px-6 py-8 text-center text-gray-500">
+                                        <p class="text-lg font-medium">Nenhum fornecedor cadastrado</p>
+                                        <p class="text-sm mt-1">Insira dados de teste no banco de dados</p>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            
-            <p style="margin-top: 20px; text-align: center; color: #666;">
-                Total de fornecedores: <strong>{{ $fornecedores->count() }}</strong>
-            </p>
-        @else
-            <div class="sem-fornecedores">
-                <p>Nenhum fornecedor encontrado.</p>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mt-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-gray-600 text-sm font-semibold uppercase">Total de Fornecedores</h3>
+                    <p class="text-3xl font-bold text-blue-600 mt-2">{{ $fornecedores->count() ?? 0 }}</p>
+                </div>
             </div>
-        @endif
+
+        </div>
     </div>
 </body>
 </html>

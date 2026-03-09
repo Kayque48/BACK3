@@ -20,6 +20,7 @@ class ClientesFactory extends Factory
         return [
             'nome' => fake()->name(),
             'cpf' => fake()->unique()->text(),
+            'email' => fake()->unique()->text(),
             'telefone' => fake()->text(),
             'reserva' => fake()->numberBetween(0,1),
         ];

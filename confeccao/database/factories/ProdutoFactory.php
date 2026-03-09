@@ -19,7 +19,8 @@ class ProdutoFactory extends Factory
         return [
             'nome' => fake()->name(),
             'descricao' => fake()->text(),
-            'categoria' => fake()->text(),
+            'quantidade' => fake()->numberBetween(1,1000),
+            'preco' => fake()->randomFloat(2, 10, 1000),
             'reserva' => fake()->numberBetween(1,1000)
         ];
     }
