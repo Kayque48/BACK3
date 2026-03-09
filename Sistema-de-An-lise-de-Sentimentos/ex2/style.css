@@ -1,0 +1,22 @@
+body {
+    display: flex;
+    text-align: center;
+    margin-top: 50px;
+    gap: 20px;
+    background-color: #f0a500; 
+}
+
+div {
+    border-radius: 20px;
+    border: 20px solid burlywood; 
+    padding: 50px;
+    background-color: aquamarine; 
+    color: black; 
+    outline: 6px dashed red; 
+    margin: 20px;
+}
+
+div img {
+    display: block;
+    background-color: lightcoral;
+}

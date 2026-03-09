@@ -1,0 +1,91 @@
+body {
+            text-align: center;
+            font-family: sans-serif;
+            margin: 0;
+            background: #f5f5f5;
+            color: #222;
+            background-image: url(https://i.pinimg.com/1200x/37/18/26/3718266aa19e6f95eb290b6f475408ff.jpg);
+            font: caption;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            background: linear-gradient(90deg, #000000 0%, #d4af37 100%);
+        }
+
+        header h1 {
+            font-size: 28px;
+            color: #d4af37;
+        }
+
+        header div {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+        }
+
+        header div span:hover {
+            color: #000;
+            cursor: pointer;
+        }
+
+        main {
+            padding: 60px 40px;
+        }
+
+        main h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 24px;
+            background: white;
+        }
+
+        footer {
+            background: #111;
+            color: #aaa;
+            padding: 40px;
+            margin-top: 60px;
+        }
+
+        footer h2 {
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        footer hr {
+            border: none;
+            border-top: 1px solid #333;
+            margin-bottom: 20px;
+        }
+
+        footer div {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        footer div ul {
+            list-style: none;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        footer div ul:hover {
+            color: #d4af37;
+        }
