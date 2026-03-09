@@ -3,146 +3,380 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Novo Registro de Estoque - Confecção</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Novo Estoque - Confecção</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --color-dark-purple: #2d1b4e;
+            --color-black-dark: #0a0014;
+            --color-black-card: #0f0f1e;
+            --color-purple-bright: #9d4edd;
+            --color-purple-light: #c77dff;
+            --color-pink-accent: #ff006e;
+            --color-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--color-dark-purple) 0%, var(--color-black-dark) 100%);
+            color: var(--color-white);
+            min-height: 100vh;
+        }
+
+        .container-glass {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .page-header p {
+            color: rgba(199, 125, 255, 0.7);
+            font-size: 1rem;
+        }
+
+        .glass-card {
+            background: rgba(15, 15, 30, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(157, 78, 221, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.2) 0%, rgba(199, 125, 255, 0.1) 100%);
+            border-bottom: 2px solid var(--color-purple-bright);
+            padding: 1.5rem;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 1rem 1rem 0 0;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-purple-light);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--color-purple-light);
+            font-size: 0.95rem;
+        }
+
+        label .required {
+            color: var(--color-pink-accent);
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(157, 78, 221, 0.1);
+            border: 2px solid rgba(157, 78, 221, 0.2);
+            border-radius: 0.5rem;
+            color: var(--color-white);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select option {
+            background: var(--color-black-dark);
+            color: var(--color-white);
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            background: rgba(157, 78, 221, 0.15);
+            border-color: var(--color-purple-bright);
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.3);
+        }
+
+        input::placeholder {
+            color: rgba(199, 125, 255, 0.5);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-grid .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(157, 78, 221, 0.2);
+            justify-content: flex-end;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-purple-bright) 0%, var(--color-pink-accent) 100%);
+            color: var(--color-white);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 24px rgba(157, 78, 221, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-purple-light);
+            border: 2px solid var(--color-purple-bright);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(157, 78, 221, 0.1);
+        }
+
+        .alert {
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: #ef4444;
+            color: #fca5a5;
+        }
+
+        .alert-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .alert-content ul {
+            list-style-position: inside;
+            margin-top: 0.5rem;
+        }
+
+        .alert-content li {
+            margin-bottom: 0.25rem;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            color: #93c5fd;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .info-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .container-glass {
+                padding: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
-    <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-6xl mx-auto">
+<body>
+    <div class="container-glass">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-plus-circle"></i> Novo Estoque</h1>
+            <p>Registre um novo produto em estoque</p>
+        </div>
 
-            <!-- Header -->
-            <div class="mb-8 flex items-center justify-between">
-                <div>
-                    <h1 class="text-4xl font-bold text-gray-900">Novo Registro de Estoque</h1>
-                    <p class="text-gray-600 mt-2">Preencha os dados para registrar um item no estoque</p>
+        <!-- Error Alerts -->
+        @if($errors->any())
+            <div class="alert alert-error">
+                <div class="alert-icon">
+                    <i class="fas fa-circle-exclamation"></i>
                 </div>
-                <a href="{{ route('estoques.index') }}"
-                   class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    Voltar
-                </a>
+                <div class="alert-content">
+                    <strong>Corrija os erros abaixo:</strong>
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
+
+        <!-- Form Card -->
+        <div class="glass-card">
+            <div class="card-header">
+                <i class="fas fa-warehouse"></i> Informações do Estoque
             </div>
 
-            <!-- Alerts -->
-            @if($errors->any())
-                <div class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
-                    <div class="flex items-start gap-3">
-                        <svg class="w-5 h-5 text-red-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <div>
-                            <p class="text-sm font-semibold text-red-800 mb-1">Corrija os erros abaixo:</p>
-                            <ul class="list-disc list-inside space-y-1">
-                                @foreach($errors->all() as $error)
-                                    <li class="text-sm text-red-700">{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            @endif
+            <form action="{{ route('estoques.store') }}" method="POST">
+                @csrf
 
-            <!-- Form Card -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="bg-blue-600 px-6 py-4">
-                    <h2 class="text-white font-semibold text-sm uppercase tracking-wider">Dados do Estoque</h2>
+                <!-- Produto -->
+                <div class="form-group">
+                    <label for="produto_id">
+                        Produto <span class="required">*</span>
+                    </label>
+                    <select id="produto_id" name="produto_id" required>
+                        <option value="">Selecione um produto</option>
+                        <!-- Adicione aqui os produtos disponíveis -->
+                    </select>
+                    @error('produto_id')
+                        <small style="color: #ef4444; margin-top: 0.25rem; display: block;">{{ $message }}</small>
+                    @enderror
                 </div>
 
-                <form action="{{ route('estoques.store') }}" method="POST" class="p-6 md:p-8">
-                    @csrf
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                        <!-- Produto -->
-                        <div class="md:col-span-2">
-                            <label for="produto_id" class="block text-sm font-semibold text-gray-700 mb-1.5">
-                                Produto <span class="text-red-500">*</span>
-                            </label>
-                            <select
-                                id="produto_id"
-                                name="produto_id"
-                                class="w-full px-4 py-2.5 rounded-lg border @error('produto_id') border-red-400 bg-red-50 @else border-gray-300 @enderror text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-white"
-                            >
-                                <option value="">Selecione um produto</option>
-                                @foreach($produtos as $produto)
-                                    <option value="{{ $produto->id }}" {{ old('produto_id') == $produto->id ? 'selected' : '' }}>
-                                        {{ $produto->nome }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('produto_id')
-                                <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <!-- Quantidade -->
-                        <div>
-                            <label for="quantidade" class="block text-sm font-semibold text-gray-700 mb-1.5">
-                                Quantidade <span class="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="number"
-                                id="quantidade"
-                                name="quantidade"
-                                value="{{ old('quantidade') }}"
-                                placeholder="0"
-                                min="0"
-                                class="w-full px-4 py-2.5 rounded-lg border @error('quantidade') border-red-400 bg-red-50 @else border-gray-300 @enderror text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                            >
-                            @error('quantidade')
-                                <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <!-- Localização -->
-                        <div>
-                            <label for="localizacao" class="block text-sm font-semibold text-gray-700 mb-1.5">
-                                Localização <span class="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="localizacao"
-                                name="localizacao"
-                                value="{{ old('localizacao') }}"
-                                placeholder="Ex: Prateleira A1, Depósito 2..."
-                                class="w-full px-4 py-2.5 rounded-lg border @error('localizacao') border-red-400 bg-red-50 @else border-gray-300 @enderror text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                            >
-                            @error('localizacao')
-                                <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="flex items-center justify-end gap-3 mt-8 pt-6 border-t border-gray-100">
-                        <a href="{{ route('estoques.index') }}"
-                           class="px-5 py-2.5 rounded-lg border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm transition">
-                            Cancelar
-                        </a>
-                        <button
-                            type="submit"
-                            class="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                <!-- Grid para Quantidade e Quantidade Mínima -->
+                <div class="form-grid">
+                    <!-- Quantidade -->
+                    <div class="form-group">
+                        <label for="quantidade">
+                            Quantidade <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="number" 
+                            id="quantidade" 
+                            name="quantidade" 
+                            value="{{ old('quantidade', 0) }}"
+                            placeholder="0"
+                            min="0"
+                            required
                         >
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            Registrar Estoque
-                        </button>
+                        @error('quantidade')
+                            <small style="color: #ef4444; margin-top: 0.25rem; display: block;">{{ $message }}</small>
+                        @enderror
                     </div>
-                </form>
-            </div>
 
-            <!-- Info card -->
-            <div class="mt-6 bg-blue-50 border border-blue-100 rounded-lg p-4 flex items-start gap-3">
-                <svg class="w-5 h-5 text-blue-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <p class="text-sm text-blue-700">Campos marcados com <span class="text-red-500 font-bold">*</span> são obrigatórios.</p>
-            </div>
+                    <!-- Quantidade Mínima -->
+                    <div class="form-group">
+                        <label for="quantidade_minima">
+                            Quantidade Mínima <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="number" 
+                            id="quantidade_minima" 
+                            name="quantidade_minima" 
+                            value="{{ old('quantidade_minima', 10) }}"
+                            placeholder="10"
+                            min="0"
+                            required
+                        >
+                        @error('quantidade_minima')
+                            <small style="color: #ef4444; margin-top: 0.25rem; display: block;">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
 
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <a href="/estoques" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-check"></i> Registrar Estoque
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <div class="info-icon">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <div>
+                <strong>Sobre o Estoque:</strong>
+                <p style="margin-top: 0.5rem;">Os campos marcados com <span style="color: #ff006e;">*</span> são obrigatórios. A "Quantidade Mínima" é o limiar para alertar quando o estoque está baixo. Configure de acordo com suas necessidades operacionais.</p>
+            </div>
         </div>
     </div>
 </body>

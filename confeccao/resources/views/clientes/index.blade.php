@@ -1,99 +1,407 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clientes - Confecção</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ================================
+           VARIABLES
+        ================================= */
+
+        :root {
+            --color-dark-purple: #2d1b4e;
+            --color-black-dark: #0a0014;
+            --color-black-card: #0f0f1e;
+
+            --color-purple-bright: #9d4edd;
+            --color-purple-light: #c77dff;
+
+            --color-pink-accent: #ff006e;
+            --color-white: #ffffff;
+
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+        }
+
+        /* ================================
+           GLOBAL
+        ================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg,
+                    var(--color-dark-purple) 0%,
+                    var(--color-black-dark) 100%);
+            color: var(--color-white);
+            min-height: 100vh;
+        }
+
+        .container-glass {
+            max-width: 1200px;
+            margin: auto;
+            padding: var(--spacing-lg);
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* ================================
+           HEADER
+        ================================= */
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+
+            margin-bottom: var(--spacing-lg);
+            gap: 1rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+        }
+
+        .page-header p {
+            color: rgba(199, 125, 255, 0.7);
+            font-size: .95rem;
+        }
+
+        /* ================================
+           CARD
+        ================================= */
+
+        .glass-card {
+            background: rgba(15, 15, 30, 0.7);
+            backdrop-filter: blur(20px);
+
+            border: 1px solid rgba(157, 78, 221, 0.2);
+            border-radius: 1rem;
+
+            padding: var(--spacing-lg);
+
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg,
+                    rgba(157, 78, 221, 0.2),
+                    rgba(199, 125, 255, 0.1));
+
+            border-bottom: 2px solid var(--color-purple-bright);
+
+            padding: var(--spacing-md);
+
+            margin: -2rem -2rem 2rem -2rem;
+
+            border-radius: 1rem 1rem 0 0;
+
+            font-weight: 700;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+
+            color: var(--color-purple-light);
+        }
+
+        /* ================================
+           TABLE
+        ================================= */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: rgba(157, 78, 221, 0.2);
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            font-size: .9rem;
+        }
+
+        th {
+            color: var(--color-purple-light);
+            font-weight: 600;
+        }
+
+        tbody tr {
+            border-top: 1px solid rgba(157, 78, 221, 0.1);
+            transition: .2s;
+        }
+
+        tbody tr:hover {
+            background: rgba(157, 78, 221, 0.08);
+        }
+
+        /* ================================
+           BADGES
+        ================================= */
+
+        .badge {
+            padding: .3rem .8rem;
+            border-radius: 999px;
+            font-size: .75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+        }
+
+        /* ================================
+           BUTTONS
+        ================================= */
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+
+            padding: .6rem 1.2rem;
+
+            border-radius: .5rem;
+
+            font-size: .9rem;
+            font-weight: 600;
+
+            text-decoration: none;
+            cursor: pointer;
+
+            transition: .25s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg,
+                    var(--color-purple-bright),
+                    var(--color-pink-accent));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(157, 78, 221, .4);
+        }
+
+        .btn-secondary {
+            border: 2px solid var(--color-purple-bright);
+            color: var(--color-purple-light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(157, 78, 221, 0.1);
+        }
+
+        /* ================================
+           STATS
+        ================================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(15, 15, 30, 0.7);
+
+            border: 1px solid rgba(157, 78, 221, 0.2);
+
+            padding: 1.5rem;
+            border-radius: 1rem;
+        }
+
+        .stat-card h3 {
+            font-size: .8rem;
+            text-transform: uppercase;
+
+            color: var(--color-purple-light);
+        }
+
+        .stat-card p {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: .5rem;
+        }
+
+        /* ================================
+           ANIMATION
+        ================================= */
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
-    <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-6xl mx-auto">
-          <!-- Header -->
-            <div class="mb-8 flex items-center justify-between">
-                <div>
-                    <h1 class="text-4xl font-bold text-gray-900">Lista de Clientes</h1>
-                    <p class="text-gray-600 mt-2">Variáveis da tabela de clientes</p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <a href="{{ route('dashboard') }}"
-                    class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm transition">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                        Dashboard
-                    </a>
-                    <a href="{{ route('clientes.create') }}"
-                    class="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                        Novo Cliente
-                    </a>
-                </div>
+
+<body>
+
+    <div class="container-glass">
+
+        <!-- HEADER -->
+        <div class="page-header">
+
+            <div>
+                <h1>
+                    <i class="fas fa-users"></i>
+                    Clientes
+                </h1>
+
+                <p>Lista de clientes cadastrados</p>
             </div>
 
-            <!-- Table Card -->
-              <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead class="bg-blue-600 text-white">
-                            <tr>
-                                <th class="px-6 py-4 text-left text-sm font-semibold">ID</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold">Nome</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold">CPF</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold">Telefone</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold">E-mail</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold">Reserva</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold">Criado em</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold">Atualizado em</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            @forelse($clientes ?? [] as $cliente)
-                                <tr class="hover:bg-gray-50 transition">
-                                    <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $cliente->id }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">{{ $cliente->nome }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-600 font-mono">{{ $cliente->cpf }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">{{ $cliente->telefone }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">{{ $cliente->email }}</td>
-                                    <td class="px-6 py-4 text-sm">
-                                        <span class="px-3 py-1 rounded-full text-xs font-semibold @if($cliente->reserva) bg-green-100 text-green-800 @else bg-red-100 text-red-800 @endif">
-                                            {{ $cliente->reserva ? 'Sim' : 'Não' }}
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-600">{{ $cliente->created_at->format('d/m/Y H:i') }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-600">{{ $cliente->updated_at->format('d/m/Y H:i') }}</td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="8" class="px-6 py-8 text-center text-gray-500">
-                                        <p class="text-lg font-medium">Nenhum cliente cadastrado</p>
-                                        <p class="text-sm mt-1">Insira dados de teste no banco de dados</p>
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <div style="display:flex; gap:10px;">
 
-            <!-- Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-gray-600 text-sm font-semibold uppercase">Total de Clientes</h3>
-                    <p class="text-3xl font-bold text-blue-600 mt-2">{{ $clientes->count() ?? 0 }}</p>
-                </div>
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-gray-600 text-sm font-semibold uppercase">Reservados</h3>
-                    <p class="text-3xl font-bold text-green-600 mt-2">{{ $clientes->where('reserva', 1)->count() ?? 0 }}</p>
-                </div>
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-gray-600 text-sm font-semibold uppercase">Disponíveis</h3>
-                    <p class="text-3xl font-bold text-orange-600 mt-2">{{ $clientes->where('reserva', 0)->count() ?? 0 }}</p>
-                </div>
+                <a href="{{ route('dashboard') }}" class="btn btn-secondary">
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </a>
+
+                <a href="{{ route('clientes.create') }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Novo Cliente
+                </a>
+
             </div>
         </div>
+
+        <!-- TABLE -->
+        <div class="glass-card">
+
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                Tabela de Clientes
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Telefone</th>
+                        <th>Email</th>
+                        <th>Reserva</th>
+                        <th>Criado</th>
+                        <th>Atualizado</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @forelse($clientes ?? [] as $cliente)
+
+                        <tr>
+
+                            <td>{{ $cliente->id }}</td>
+
+                            <td>{{ $cliente->nome }}</td>
+
+                            <td style="font-family:monospace">
+                                {{ $cliente->cpf }}
+                            </td>
+
+                            <td>{{ $cliente->telefone }}</td>
+
+                            <td>{{ $cliente->email }}</td>
+
+                            <td>
+                                <span
+                                    class="badge {{ $cliente->reserva ? 'badge-success' : 'badge-danger' }}">
+                                    {{ $cliente->reserva ? 'Sim' : 'Não' }}
+                                </span>
+                            </td>
+
+                            <td>
+                                {{ $cliente->created_at->format('d/m/Y H:i') }}
+                            </td>
+
+                            <td>
+                                {{ $cliente->updated_at->format('d/m/Y H:i') }}
+                            </td>
+
+                        </tr>
+
+                    @empty
+
+                        <tr>
+                            <td colspan="8"
+                                style="text-align:center;padding:2rem;color:#aaa;">
+                                Nenhum cliente cadastrado
+                            </td>
+                        </tr>
+
+                    @endforelse
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- STATS -->
+        <div class="stats">
+
+            <div class="stat-card">
+                <h3>Total de Clientes</h3>
+                <p>{{ $clientes->count() ?? 0 }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Reservados</h3>
+                <p>{{ $clientes->where('reserva', 1)->count() ?? 0 }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Disponíveis</h3>
+                <p>{{ $clientes->where('reserva', 0)->count() ?? 0 }}</p>
+            </div>
+
+        </div>
+
     </div>
+
 </body>
+
 </html>
