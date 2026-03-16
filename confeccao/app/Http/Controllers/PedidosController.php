@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Pedidos;
+use App\Models\Clientes;
+use App\Models\Produto;
 
 class PedidosController extends Controller
 {

@@ -7,6 +7,7 @@ use App\Http\Controllers\PedidosController;
 use App\Http\Controllers\FornecedoresControllers;
 use App\Http\Controllers\EstoquesController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,6 +32,11 @@ Route::post('/produtos', [ProdutoController::class, 'store']) -> name('produtos.
 
 Route::get('/produtos', [ProdutoController::class, 'index']) -> name('produtos.index');
 
+Route::get('/produtos/edit/{produtos}', [ProdutoController::class, 'edit'])->name('produtos.edit');
+Route::put('/produtos/update/{produtos}', [ProdutoController::class, 'update'])->name('produtos.update');
+Route::delete('/produtos/destroy/{produtos}', [ProdutoController::class, 'destroy'])->name('produtos.destroy');
+
+
 
 // Fornecedores
 Route::get('/fornecedor/create', [FornecedoresControllers::class, 'create']) -> name('fornecedores.create');
@@ -38,6 +44,11 @@ Route::get('/fornecedor/create', [FornecedoresControllers::class, 'create']) -> 
 Route::post('/fornecedor', [FornecedoresControllers::class, 'store']) -> name('fornecedores.store');
 
 Route::get('/fornecedor', [FornecedoresControllers::class, 'index']) -> name('fornecedores.index');
+
+Route::get('/fornecedores/edit/{fornecedores}', [FornecedoresControllers::class, 'edit'])->name('fornecedores.edit');
+Route::put('/fornecedores/update/{fornecedores}', [FornecedoresControllers::class, 'update'])->name('fornecedores.update');
+Route::delete('/fornecedores/destroy/{fornecedores}', [FornecedoresControllers::class, 'destroy'])->name('fornecedores.destroy');
+
 
 
 // Pedidos
@@ -47,6 +58,11 @@ Route::post('/pedido', [PedidosController::class, 'store']) -> name('pedidos.sto
 
 Route::get('/pedido', [PedidosController::class, 'index']) -> name('pedidos.index');
 
+Route::get('/produtos/edit/{produtos}', [ProdutoController::class, 'edit'])->name('produtos.edit');
+Route::put('/produtos/update/{produtos}', [ProdutoController::class, 'update'])->name('produtos.update');
+Route::delete('/produtos/destroy/{produtos}', [ProdutoController::class, 'destroy'])->name('produtos.destroy');
+
+
 
 // Estoques
 Route::get('/estoque/create', [EstoquesController::class, 'create']) -> name('estoques.create');
@@ -55,10 +71,15 @@ Route::post('/estoque', [EstoquesController::class, 'store']) -> name('estoques.
 
 Route::get('/estoque', [EstoquesController::class, 'index']) -> name('estoques.index');
 
+Route::get('/estoques/edit/{estoques}', [EstoquesController::class, 'edit'])->name('estoques.edit');
+Route::put('/estoques/update/{estoques}', [EstoquesController::class, 'update'])->name('estoques.update');
+Route::delete('/estoques/destroy/{estoques}', [EstoquesController::class, 'destroy'])->name('estoques.destroy');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

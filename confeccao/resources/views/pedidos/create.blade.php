@@ -318,6 +318,20 @@
                         @enderror
                     </div>
 
+                    <!-- PRODUTO DO PEDIDO -->
+                    <div class="form-group">
+                        <label for="produto_id">
+                            Produto do Pedido <span class="required">*</span>
+                        </label>
+                        <select id="produto_id" name="produto_id" required>
+                            <option value="">Selecione um produto</option>
+                            <!-- Adicione aqui os produtos disponíveis -->
+                        </select>
+                        @error('produto_id')
+                            <small style="color: #ef4444; margin-top: 0.25rem; display: block;">{{ $message }}</small>
+                        @enderror
+                    </div>
+
                     <!-- Data do Pedido -->
                     <div class="form-group">
                         <label for="data_pedido">

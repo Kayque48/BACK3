@@ -276,6 +276,7 @@
                             <th><i class="fas fa-id-card"></i> CNPJ</th>
                             <th><i class="fas fa-map-marker"></i> Endereço</th>
                             <th><i class="fas fa-calendar"></i> Criado em</th>
+                            <th><i class="fas fa-cogs"></i> Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -288,10 +289,26 @@
                                 <td style="font-family: 'Space Mono', monospace;">{{ $fornecedor->cnpj }}</td>
                                 <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $fornecedor->endereco }}</td>
                                 <td style="font-size: 0.9rem;">{{ $fornecedor->created_at->format('d/m/Y H:i') }}</td>
+                                <td style="display: flex; gap: 0.5rem; align-items: center;">
+                                <a href="{{ route('fornecedores.edit', ['fornecedores' => $fornecedor->id]) }}" class="btn btn-secondary" style="padding: .4rem .9rem; font-size: .8rem;">
+                                    <i class="fas fa-pen"></i>
+                                    Editar
+                                </a>
+
+                                <form action="{{ route('fornecedores.destroy', ['fornecedores' => $fornecedor->id]) }}" method="POST"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este fornecedor?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn" style="padding: .4rem .9rem; font-size: .8rem; background: rgba(239,68,68,0.15); color: #f87171; border: 2px solid #ef4444;">
+                                        <i class="fas fa-trash"></i>
+                                        Excluir
+                                    </button>
+                                </form>
+                            </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7">
+                                <td colspan="8">
                                     <div class="empty-state">
                                         <i class="fas fa-inbox"></i>
                                         <p style="font-size: 1.1rem; margin-bottom: 0.5rem;"><strong>Nenhum fornecedor cadastrado</strong></p>

@@ -294,6 +294,7 @@
                             <th><i class="fas fa-bookmark"></i> Reserva</th>
                             <th><i class="fas fa-calendar"></i> Criado em</th>
                             <th><i class="fas fa-sync"></i> Atualizado em</th>
+                            <th><i class="fas fa-cogs"></i> Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -311,10 +312,26 @@
                                 </td>
                                 <td style="font-size: 0.9rem;">{{ $produto->created_at->format('d/m/Y H:i') }}</td>
                                 <td style="font-size: 0.9rem;">{{ $produto->updated_at->format('d/m/Y H:i') }}</td>
+                                <td style="display: flex; gap: 0.5rem; align-items: center;">
+                                <a href="{{ route('produtos.edit', ['produtos' => $produto->id]) }}" class="btn btn-secondary" style="padding: .4rem .9rem; font-size: .8rem;">
+                                    <i class="fas fa-pen"></i>
+                                    Editar
+                                </a>
+
+                                <form action="{{ route('produtos.destroy', ['produtos' => $produto->id]) }}" method="POST"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este produto?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn" style="padding: .4rem .9rem; font-size: .8rem; background: rgba(239,68,68,0.15); color: #f87171; border: 2px solid #ef4444;">
+                                        <i class="fas fa-trash"></i>
+                                        Excluir
+                                    </button>
+                                </form>
+                            </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8">
+                                <td colspan="9">
                                     <div class="empty-state">
                                         <i class="fas fa-inbox"></i>
                                         <p style="font-size: 1.1rem; margin-bottom: 0.5rem;"><strong>Nenhum produto cadastrado</strong></p>

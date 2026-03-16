@@ -298,8 +298,9 @@
                         <tr>
                             <th><i class="fas fa-hashtag"></i> ID</th>
                             <th><i class="fas fa-user"></i> Cliente</th>
+                            <th><i class="fas fa-box"></i> Produto</th>
                             <th><i class="fas fa-calendar"></i> Data</th>
-                            <th><i class="fas fa-money-bill"></i> Total</th>
+                            <th><i class="fas fa-money-bill"></i> Quantidade</th>
                             <th><i class="fas fa-flag"></i> Status</th>
                             <th><i class="fas fa-sync"></i> Atualizado</th>
                         </tr>
@@ -310,7 +311,7 @@
                                 <td><strong>#{{ $pedido->id }}</strong></td>
                                 <td>{{ $pedido->cliente_id ?? 'N/A' }}</td>
                                 <td style="font-size: 0.9rem;">{{ $pedido->created_at->format('d/m/Y') }}</td>
-                                <td class="value">R$ {{ number_format($pedido->total ?? 0, 2, ',', '.') }}</td>
+                                <td class="value">{{ $pedido->quantidade ?? 0 }}</td>
                                 <td>
                                     @php
                                         $status = $pedido->status ?? 'pendente';
@@ -328,7 +329,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6">
+                                <td colspan="7">
                                     <div class="empty-state">
                                         <i class="fas fa-inbox"></i>
                                         <p style="font-size: 1.1rem; margin-bottom: 0.5rem;"><strong>Nenhum pedido cadastrado</strong></p>
