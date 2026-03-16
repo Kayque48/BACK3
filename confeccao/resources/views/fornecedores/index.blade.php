@@ -254,10 +254,10 @@
                 <p>Gerencie seus fornecedores e informações de contato</p>
             </div>
             <div class="header-buttons">
-                <a href="/" class="btn btn-secondary">
+                <a href="{{ route('dashboard') }}" class="btn btn-secondary">
                     <i class="fas fa-home"></i> Dashboard
                 </a>
-                <a href="/fornecedor/create" class="btn btn-primary">
+                <a href="{{ route('fornecedores.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Novo Fornecedor
                 </a>
             </div>

@@ -295,10 +295,10 @@
                 <p>Controle e gerencie seu estoque de produtos</p>
             </div>
             <div class="header-buttons">
-                <a href="/" class="btn btn-secondary">
+                <a href="{{ route('dashboard') }}" class="btn btn-secondary">
                     <i class="fas fa-home"></i> Dashboard
                 </a>
-                <a href="/estoques/create" class="btn btn-primary">
+                <a href="{{ route('estoques.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Novo Estoque
                 </a>
             </div>

@@ -325,6 +325,7 @@
                         <th>Reserva</th>
                         <th>Criado</th>
                         <th>Atualizado</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
 
@@ -361,19 +362,36 @@
                                 {{ $cliente->updated_at->format('d/m/Y H:i') }}
                             </td>
 
+                           <td style="display: flex; gap: 0.5rem; align-items: center;">
+                                <a href="{{ route('clientes.edit', ['clientes' => $cliente->id]) }}" class="btn btn-secondary" style="padding: .4rem .9rem; font-size: .8rem;">
+                                    <i class="fas fa-pen"></i>
+                                    Editar
+                                </a>
+
+                                <form action="{{ route('clientes.destroy', ['clientes' => $cliente->id]) }}" method="POST"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este cliente?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn" style="padding: .4rem .9rem; font-size: .8rem; background: rgba(239,68,68,0.15); color: #f87171; border: 2px solid #ef4444;">
+                                        <i class="fas fa-trash"></i>
+                                        Excluir
+                                    </button>
+                                </form>
+                            </td>
+
                         </tr>
 
                     @empty
 
                         <tr>
-                            <td colspan="8"
+                            <td colspan="9"
                                 style="text-align:center;padding:2rem;color:#aaa;">
                                 Nenhum cliente cadastrado
                             </td>
                         </tr>
 
                     @endforelse
-
+                    
                 </tbody>
 
             </table>

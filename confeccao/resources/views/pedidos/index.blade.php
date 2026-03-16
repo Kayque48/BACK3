@@ -281,10 +281,10 @@
                 <p>Gerencie os pedidos dos seus clientes</p>
             </div>
             <div class="header-buttons">
-                <a href="/" class="btn btn-secondary">
+                <a href="{{ route('dashboard') }}" class="btn btn-secondary">
                     <i class="fas fa-home"></i> Dashboard
                 </a>
-                <a href="/pedido/create" class="btn btn-primary">
+                <a href="{{ route('pedidos.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Novo Pedido
                 </a>
             </div>
