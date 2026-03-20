@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('telefone')->nullable();
             $table->string('documento')->nullable();
+             $table->enum('tipo', ['fisica', 'juridica'])->default('juridica');
             $table->timestamps( );
         });
     }

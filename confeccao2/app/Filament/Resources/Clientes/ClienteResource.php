@@ -17,6 +17,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\Select;
 
 class ClienteResource extends Resource
 {
@@ -35,6 +36,12 @@ class ClienteResource extends Resource
                 textInput::make('email')->required()->email()->label('Email'),
                 textInput::make('telefone')->tel()->label('Telefone'),
                 textInput::make('documento')->label('CPF ou CNPJ'),
+
+                Select::make('tipo')->label('Tipo')->options([
+                    'fisica' => 'Pessoa Física',
+                    'juridica' => 'Pessoa Jurídica',
+                ]),
+
             ]);
     }
 
@@ -53,6 +60,7 @@ class ClienteResource extends Resource
                 textColumn::make('email')->label('Email')->searchable()->sortable(),
                 textColumn::make('telefone')->label('Telefone')->searchable()->sortable(),
                 textColumn::make('documento')->label('CPF ou CNPJ')->searchable()->sortable(),
+                textColumn::make('tipo')->label('Tipo')->searchable()->sortable(),
             ]);
     }
 

@@ -24,6 +24,8 @@ class ClientesTable
                     ->searchable(),
                 TextColumn::make('documento')
                     ->searchable(),
+                TextColumn::make('tipo')
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
