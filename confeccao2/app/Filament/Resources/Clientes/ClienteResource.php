@@ -37,7 +37,8 @@ class ClienteResource extends Resource
                 textInput::make('email')->required()->email()->label('Email'),
                 textInput::make('telefone')->tel()->label('Telefone')->mask('(99) 99999-9999'),
                 textInput::make('documento')->label('CPF ou CNPJ')->mask(RawJs::make(<<<'JS'
-                $input.length > 14 ? '00.000.000/0000-00' : '000.000.000-00' JS)),
+                $input.length > 14 ? '00.000.000/0000-00' : '000.000.000-00' 
+                JS)),
 
                 Select::make('tipo')->label('Tipo')->options([
                     'fisica' => 'Pessoa Física',
