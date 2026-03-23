@@ -18,6 +18,7 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Select;
+use Filament\Support\RawJs;
 
 class ClienteResource extends Resource
 {
@@ -34,8 +35,9 @@ class ClienteResource extends Resource
             ->components([
                 textInput::make('nome')->required()->label('Nome Completo'),
                 textInput::make('email')->required()->email()->label('Email'),
-                textInput::make('telefone')->tel()->label('Telefone'),
-                textInput::make('documento')->label('CPF ou CNPJ'),
+                textInput::make('telefone')->tel()->label('Telefone')->mask('(99) 99999-9999'),
+                textInput::make('documento')->label('CPF ou CNPJ')->mask(RawJs::make(<<<'JS'
+                $input.length > 14 ? '00.000.000/0000-00' : '000.000.000-00' JS)),
 
                 Select::make('tipo')->label('Tipo')->options([
                     'fisica' => 'Pessoa Física',
