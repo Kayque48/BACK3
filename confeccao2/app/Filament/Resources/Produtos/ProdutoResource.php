@@ -15,6 +15,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
 
 class ProdutoResource extends Resource
 {
@@ -26,7 +28,13 @@ class ProdutoResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return ProdutoForm::configure($schema);
+        return $schema
+            ->components([
+                TextInput::make('nome')->required()->label('Nome do Produto'),
+                TextInput::make('referencia')->required()->label('Referência'),
+                TextInput::make('preco')->numeric()->label('Preço')->prefix('R$ '),
+                TextInput::make('estoque')->numeric()->label('Estoque'),
+            ]);
     }
 
     public static function infolist(Schema $schema): Schema
@@ -36,7 +44,13 @@ class ProdutoResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return ProdutosTable::configure($table);
+         return $table
+            ->columns([
+                TextColumn::make('nome')->label('Nome do Produto')->searchable()->sortable(),
+                TextColumn::make('referencia')->label('Referência')->searchable()->sortable(),
+                TextColumn::make('preco')->label('Preço')->money('BRL', true)->sortable(),
+                TextColumn::make('estoque')->label('Estoque')->sortable(),
+            ]);
     }
 
     public static function getRelations(): array

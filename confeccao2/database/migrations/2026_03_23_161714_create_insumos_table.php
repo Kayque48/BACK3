@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('produtos', function (Blueprint $table) {
+        Schema::create('insumos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('referencia')->unique(); // EX: <CAM-PRE-001>
+            $table->string('unidade_medida');
             $table->decimal('preco', 10, 2)->nullable();
-            $table->integer('estoque')->default(0);
+            $table->decimal('estoque', 10, 2)->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('produtos');
+        Schema::dropIfExists('insumos');
     }
 };
