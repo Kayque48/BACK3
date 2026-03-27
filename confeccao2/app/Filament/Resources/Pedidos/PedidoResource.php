@@ -21,6 +21,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Repeater;
 use Filament\Schemas\Components\Utilities\get;
 use Filament\Schemas\Components\Utilities\set;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Support\RawJs;
 
 class PedidoResource extends Resource
 {
@@ -125,7 +128,11 @@ class PedidoResource extends Resource
                     ->label('Data do Pedido')
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),
-            ]);
+            ])
+            ->recordActions([
+                ViewAction::make()->label('Visualizar'),
+                EditAction::make()->label('Editar'),
+             ]);
     }
 
     public static function getRelations(): array

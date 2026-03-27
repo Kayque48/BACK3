@@ -17,6 +17,10 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
+use Filament\Support\RawJs;
 
 class InsumoResource extends Resource
 {
@@ -31,8 +35,49 @@ class InsumoResource extends Resource
         return $schema
             ->components([
                 TextInput::make('nome')->required()->label('Nome do Insumo'),
-                TextInput::make('unidade_medida')->required()->label('Unidade de Medida'),
-                TextInput::make('preco')->numeric()->label('Preço')->prefix('R$ '),
+                Select::make('unidade_medida')
+                    ->label('Unidade de Medida')
+                    ->required()
+                    ->searchable() // Recomendado, já que a lista ficou grande
+                    ->options([
+                        'Massa/Peso' => [
+                            'kg' => 'Quilograma (kg)',
+                            'g'  => 'Grama (g)',
+                            'mg' => 'Miligrama (mg)',
+                            'ton' => 'Tonelada (t)',
+                        ],
+                        'Volume/Líquidos' => [
+                            'l'  => 'Litro (l)',
+                            'ml' => 'Mililitro (ml)',
+                            'm3' => 'Metro Cúbico (m³)',
+                        ],
+                        'Quantitativo/Unidades' => [
+                            'un'  => 'Unidade (un)',
+                            'pc'  => 'Peça (pç)',
+                            'cj'  => 'Conjunto (cj)',
+                            'dz'  => 'Dúzia (dz)',
+                            'par' => 'Par',
+                        ],
+                        'Embalagens Coletivas' => [
+                            'cx'  => 'Caixa (cx)',
+                            'fd'  => 'Fardo (fd)',
+                            'pt'  => 'Pacote (pt)',
+                            'gl'  => 'Galão (gl)',
+                            'lt'  => 'Lata (lt)',
+                            'sc'  => 'Saco (sc)',
+                            'bd'  => 'Balde (bd)',
+                            'rl'  => 'Rolo (rl)',
+                        ],
+                        'Comprimento/Área' => [
+                            'm'  => 'Metro (m)',
+                            'cm' => 'Centímetro (cm)',
+                            'mm' => 'Milímetro (mm)',
+                            'm2' => 'Metro Quadrado (m²)',
+                        ],
+                    ]),
+                TextInput::make('preco')->numeric()->label('Preço')->prefix('R$ ')->mask(RawJs::make(<<<'JS'
+                    $input->format('0,0.00')
+                JS)),
                 TextInput::make('estoque')->numeric()->label('Estoque'),
             ]);
     }
@@ -50,7 +95,11 @@ class InsumoResource extends Resource
                 TextColumn::make('unidade_medida')->label('Unidade de Medida')->searchable()->sortable(),
                 TextColumn::make('preco')->label('Preço')->money('BRL', true)->sortable(),
                 TextColumn::make('estoque')->label('Estoque')->sortable(),
-            ]);
+            ])
+            ->recordActions([
+                ViewAction::make()->label('Visualizar'),
+                EditAction::make()->label('Editar'),
+             ]);
     }
 
     public static function getRelations(): array

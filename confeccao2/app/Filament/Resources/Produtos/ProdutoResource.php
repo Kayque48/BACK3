@@ -17,6 +17,9 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Support\RawJs;
 
 class ProdutoResource extends Resource
 {
@@ -32,7 +35,9 @@ class ProdutoResource extends Resource
             ->components([
                 TextInput::make('nome')->required()->label('Nome do Produto'),
                 TextInput::make('referencia')->required()->label('Referência'),
-                TextInput::make('preco')->numeric()->label('Preço')->prefix('R$ '),
+                TextInput::make('preco')->numeric()->label('Preço')->prefix('R$ ')->mask(RawJs::make(<<<'JS'
+                    $input->format('0,0.00')
+                JS)),
                 TextInput::make('estoque')->numeric()->label('Estoque'),
             ]);
     }
@@ -50,7 +55,11 @@ class ProdutoResource extends Resource
                 TextColumn::make('referencia')->label('Referência')->searchable()->sortable(),
                 TextColumn::make('preco')->label('Preço')->money('BRL', true)->sortable(),
                 TextColumn::make('estoque')->label('Estoque')->sortable(),
-            ]);
+            ])
+            ->recordActions([
+                ViewAction::make()->label('Visualizar'),
+                EditAction::make()->label('Editar'),
+             ]);
     }
 
     public static function getRelations(): array

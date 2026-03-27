@@ -19,6 +19,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Select;
 use Filament\Support\RawJs;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
 
 class ClienteResource extends Resource
 {
@@ -64,7 +66,11 @@ class ClienteResource extends Resource
                 textColumn::make('telefone')->label('Telefone')->searchable()->sortable(),
                 textColumn::make('documento')->label('CPF ou CNPJ')->searchable()->sortable(),
                 textColumn::make('tipo')->label('Tipo')->searchable()->sortable(),
-            ]);
+            ])
+            ->recordActions([
+                ViewAction::make()->label('Visualizar'),
+                EditAction::make()->label('Editar'),
+             ]);
     }
 
     public static function getRelations(): array

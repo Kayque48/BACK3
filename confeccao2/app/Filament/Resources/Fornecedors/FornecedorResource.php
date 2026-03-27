@@ -18,6 +18,9 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Select;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Support\RawJs;
 
 class FornecedorResource extends Resource
 {
@@ -29,19 +32,16 @@ class FornecedorResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return FornecedorForm::configure($schema);
+        // return FornecedorForm::configure($schema);
         return $schema
             ->components([
                 TextInput::make('nome')->required()->label('Nome Completo'),
                 TextInput::make('nome_fantasia')->label('Nome Fantasia(opcional)'),
                 TextInput::make('email')->required()->email()->label('Email'),
-                TextInput::make('telefone')->tel()->label('Telefone'),
-                TextInput::make('documento')->label('CPF ou CNPJ'),
-
-                Select::make('tipo')->label('Tipo')->options([
-                    'fisica' => 'Pessoa Física',
-                    'juridica' => 'Pessoa Jurídica',
-                ]),
+                textInput::make('telefone')->tel()->label('Telefone')->mask('(99) 99999-9999'),
+                TextInput::make('documento')->label('CPF ou CNPJ')->mask(RawJs::make(<<<'JS'
+                $input.length > 14 ? '99.999.999/9999-99' : '99.999.999-999.99' 
+                JS)),
 
             ]);
     }
@@ -60,7 +60,10 @@ class FornecedorResource extends Resource
                 textColumn::make('email')->label('Email')->searchable()->sortable(),
                 textColumn::make('telefone')->label('Telefone')->searchable()->sortable(),
                 textColumn::make('documento')->label('CPF ou CNPJ')->searchable()->sortable(),
-                textColumn::make('tipo')->label('Tipo')->searchable()->sortable(),
+            ])
+            ->recordActions([
+                ViewAction::make()->label('Visualizar'),
+                EditAction::make()->label('Editar'),
             ]);
         // return FornecedorsTable::configure($table);
     }
