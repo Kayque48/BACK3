@@ -26,6 +26,31 @@ class ClienteResource extends Resource
 {
     protected static ?string $model = Cliente::class;
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole('RH') ?? false;
+    }
+
+    public static function getLabel(): ?string
+    {
+        return 'Cliente';
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return 'Clientes';
+    }
+
+     public static function getCreateFormHeading(): string
+    {
+        return 'Criar cliente';
+    }
+
+    public static function getEditFormHeading(): string
+    {
+        return 'Editar cliente';
+    }
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'Cliente';

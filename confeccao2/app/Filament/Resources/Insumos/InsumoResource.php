@@ -26,6 +26,12 @@ class InsumoResource extends Resource
 {
     protected static ?string $model = Insumo::class;
 
+     public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole('Gerente') ?? false;
+    }
+
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'Insumo';

@@ -24,18 +24,36 @@ class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'Cargos e Funções';
-
-    public static function getLabel(): string
+    protected static function canAcess(): bool
     {
-        return 'Cargo e Função';
+        // return auth()->user()?->hasRole('Admin') ?? false;
+        // return auth()->user()?->can('acessar_cliente') ?? false;
+        return auth()->user()?->can('acessar_clientes') ?? false;
     }
 
-    public static function getPluralLabel(): string
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+      public static function getLabel(): ?string
+    {
+        return 'Função';
+    }
+
+    public static function getPluralLabel(): ?string
     {
         return 'Cargos e Funções';
+    }
+
+    public static function getCreateFormHeading(): string
+    {
+        return 'Criar função';
+    }
+
+    public static function getEditFormHeading(): string
+    {
+        return 'Editar função';
     }
 
     public static function form(Schema $schema): Schema
@@ -68,6 +86,7 @@ class RoleResource extends Resource
         return $table
         ->columns([
             TextColumn::make('name')->label('Nome do Cargo/Função')->sortable()->searchable(),
+            TextColumn::make('guard_name')->label('Sigla do Cargo/Função')->sortable()->searchable(),
             TextColumn::make('permissions_count')->label('Permissões de Acesso')->counts('permissions')->sortable(),
         ]);
     }
