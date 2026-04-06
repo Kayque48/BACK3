@@ -10,6 +10,7 @@ use App\Filament\Resources\Insumos\Schemas\InsumoForm;
 use App\Filament\Resources\Insumos\Schemas\InsumoInfolist;
 use App\Filament\Resources\Insumos\Tables\InsumosTable;
 use App\Models\Insumo;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -25,6 +26,10 @@ use Filament\Support\RawJs;
 class InsumoResource extends Resource
 {
     protected static ?string $model = Insumo::class;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Controle de Estoque';
+
+    protected static ?int $navigationSort = 2;
 
      public static function canAccess(): bool
     {

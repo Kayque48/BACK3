@@ -11,6 +11,7 @@ use App\Filament\Resources\Roles\Schemas\RoleInfolist;
 use App\Filament\Resources\Roles\Tables\RolesTable;
 // use App\Models\Role;
 use Spatie\Permission\Models\Role;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -23,6 +24,10 @@ use Filament\Tables\Columns\TextColumn;
 class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
+
+        protected static string|UnitEnum|null $navigationGroup = 'Configurações';
+
+    protected static ?int $navigationSort = 2;
 
 
     protected static function canAcess(): bool

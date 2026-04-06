@@ -11,6 +11,7 @@ use App\Filament\Resources\Permissions\Schemas\PermissionInfolist;
 use App\Filament\Resources\Permissions\Tables\PermissionsTable;
 // use App\Models\Permission;
 use Spatie\Permission\Models\Permission;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -24,7 +25,16 @@ class PermissionResource extends Resource
 {
     protected static ?string $model = Permission::class;
 
-     public static function canAccess(): bool
+    protected static string|UnitEnum|null $navigationGroup = 'Configurações';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationLabel = 'Regras de Acesso';
+
+    protected static ?string $modelLabel = 'Regra de Acesso';
+
+    protected static ?string $pluralModelLabel = 'Regras de Acesso';
+    public static function canAccess(): bool
     {
         return auth()->user()?->hasRole('Gerente') ?? false;
     }

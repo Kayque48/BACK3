@@ -10,6 +10,7 @@ use App\Filament\Resources\Clientes\Schemas\ClienteForm;
 use App\Filament\Resources\Clientes\Schemas\ClienteInfolist;
 use App\Filament\Resources\Clientes\Tables\ClientesTable;
 use App\Models\Cliente;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -25,6 +26,10 @@ use Filament\Actions\EditAction;
 class ClienteResource extends Resource
 {
     protected static ?string $model = Cliente::class;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Cadastros Gerias';
+
+    protected static ?int $navigationSort = 1;
 
     public static function canAccess(): bool
     {
