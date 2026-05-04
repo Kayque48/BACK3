@@ -191,6 +191,14 @@
     <div class="w-full max-w-6xl mx-auto px-4 py-8">
         <!-- Cabeçalho Pokémon Game -->
         <div class="text-center mb-12">
+            <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;">
+                <a href="/" class="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg border-4 border-gray-900 hover:bg-blue-700 transition uppercase" style="box-shadow: 0 4px 0 rgba(0,0,0,0.3); text-decoration: none; display: inline-block;">
+                    <i class="fas fa-home mr-2"></i>Início
+                </a>
+                <a href="{{ route('pokemon.create') }}" class="px-6 py-3 bg-purple-600 text-white font-bold rounded-lg border-4 border-gray-900 hover:bg-purple-700 transition uppercase" style="box-shadow: 0 4px 0 rgba(0,0,0,0.3); text-decoration: none; display: inline-block;">
+                    <i class="fas fa-plus-circle mr-2"></i>Novo Pokémon
+                </a>
+            </div>
             <h1 class="pokedex-title text-white mb-2" style="color: #FFD700; text-shadow: 4px 4px 0px #333;">
                 <i class="fas fa-book text-red-400 mr-3"></i>POKÉDEX
             </h1>
@@ -394,21 +402,20 @@
                 </div>
 
                 <!-- Botões -->
-                <div class="bg-gray-100 p-6 border-t-4 border-gray-300 flex gap-3">
+                <div class="bg-gray-100 p-6 border-t-4 border-gray-300 flex flex-col sm:flex-row gap-3">
+                    <a href="/" class="px-6 py-3 bg-blue-500 text-white font-bold rounded-lg border-3 border-gray-900 hover:bg-blue-600 transition uppercase text-center" style="box-shadow: 0 4px 0 rgba(0,0,0,0.3);">
+                        <i class="fas fa-home mr-2"></i>Início
+                    </a>
                     <button 
                         onclick="document.getElementById('pokemonInput').value=''; document.getElementById('searchForm').submit();" 
-                        class="flex-1 px-6 py-3 bg-green-500 text-white font-bold rounded-lg border-3 border-gray-900 hover:bg-green-600 transition uppercase"
-                        style="box-shadow: 0 4px 0 rgba(0,0,0,0.3);"
+                        class="px-6 py-3 bg-green-500 text-white font-bold rounded-lg border-3 border-gray-900 hover:bg-green-600 transition uppercase"
+                        style="box-shadow: 0 4px 0 rgba(0,0,0,0.3); flex: 1;"
                     >
                         <i class="fas fa-redo mr-2"></i>Buscar Outro
                     </button>
-                    <button 
-                        onclick="window.location.href='/'" 
-                        class="flex-1 px-6 py-3 bg-gray-500 text-white font-bold rounded-lg border-3 border-gray-900 hover:bg-gray-600 transition uppercase"
-                        style="box-shadow: 0 4px 0 rgba(0,0,0,0.3);"
-                    >
-                        <i class="fas fa-home mr-2"></i>Voltar
-                    </button>
+                    <a href="{{ route('pokemon.create') }}" class="px-6 py-3 bg-purple-600 text-white font-bold rounded-lg border-3 border-gray-900 hover:bg-purple-700 transition uppercase text-center" style="box-shadow: 0 4px 0 rgba(0,0,0,0.3);">
+                        <i class="fas fa-plus-circle mr-2"></i>Novo Pokémon
+                    </a>
                 </div>
             </div>
         </div>
@@ -500,7 +507,7 @@
             e.preventDefault();
             const pokemonName = document.getElementById('pokemonInput').value.trim().toLowerCase();
             if (pokemonName) {
-                window.location.href = `/pokedex?name=${encodeURIComponent(pokemonName)}`;
+                window.location.href = `/pokemon?name=${encodeURIComponent(pokemonName)}`;
             }
         });
     </script>

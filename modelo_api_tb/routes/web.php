@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
-use App\Http\Controllers\Api\PokemonController;
+use App\Http\Controllers\Api\PokemonController as ApiPokemonController;
+use App\Http\Controllers\PokemonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,8 +13,8 @@ use App\Http\Controllers\Api\PokemonController;
 */
 
 // Rota para página inicial / buscar pokémon
-Route::get('/', [PokemonController::class, 'index'])->name('pokemon.index');
-Route::get('/pokemon', [PokemonController::class, 'index'])->name('pokemon.show');
+Route::get('/', [ApiPokemonController::class, 'index'])->name('pokemon.index');
+Route::get('/pokemon', [ApiPokemonController::class, 'index'])->name('pokemon.show');
 
 // Exemplo 1: GET - Buscando dados de uma API Externa (PokeAPI) - API JSON
 Route::get('/api/pokemon/{nome}', function ($nome) {
@@ -34,22 +35,8 @@ Route::get('/api/pokemon/{nome}', function ($nome) {
     return response()->json(['erro' => 'Pokémon não encontrado'], 404);
 });
 
-// Exemplo 2: POST - Recebendo dados via JSON (Simulando Cadastro)
+// Rota para EXIBIR o formulário de cadastro
+Route::get('/pokemon/novo', [PokemonController::class, 'create'])->name('pokemon.create');
 
-Route::post('/pokemon/novo', function (Request $request) {
-    // Validação dos dados recebidos
-    $dados = $request->validate([
-        'nome'   => 'required|string|min:3',
-        'tipo'   => 'required|string',
-        'ataque' => 'required|integer'
-    ]);
-
-    // Simulação de salvamento no banco de dados
-    return response()->json([
-        'mensagem' => 'Pokémon cadastrado com sucesso!',
-        'id_gerado' => rand(1000, 9999),
-        'dados_recebidos' => $dados
-    ], 201); // 201: Created
-});
-
-Route::get('/pokedex', [PokemonController::class, 'index'])->name('pokemon.show');
+// Rota para RECEBER os dados do formulário e salvar no banco
+Route::post('/pokemon/novo', [PokemonController::class, 'store'])->name('pokemon.store');
