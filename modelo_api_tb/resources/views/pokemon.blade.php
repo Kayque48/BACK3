@@ -318,6 +318,21 @@
                             <div class="text-center mt-4">
                                 <p class="text-sm font-bold text-gray-600">Altura: {{ number_format($pokemon['height']/10, 2, ',', '.') }}m</p>
                                 <p class="text-sm font-bold text-gray-600">Peso: {{ number_format($pokemon['weight']/10, 2, ',', '.') }}kg</p>
+                                
+                                {{-- Botão de Som --}}
+                                @if(isset($pokemon['cry']) && isset($pokemon['cry']['latest']) && !empty($pokemon['cry']['latest']))
+                                <button 
+                                    onclick="playCry()" 
+                                    class="mt-4 px-4 py-2 bg-yellow-400 text-gray-900 font-bold rounded-lg border-2 border-gray-900 hover:bg-yellow-300 transition"
+                                    style="font-size: 0.8rem;"
+                                >
+                                    <i class="fas fa-volume-high mr-2"></i>Ouvir Som
+                                </button>
+                                <audio id="pokemonCry" preload="none">
+                                    <source src="{{ $pokemon['cry']['latest'] }}" type="audio/wav">
+                                    Seu navegador não suporta reprodução de áudio.
+                                </audio>
+                                @endif
                             </div>
                         </div>
 
@@ -500,6 +515,20 @@
                 document.getElementById('shinyText').textContent = 'Shiny ✨';
                 document.querySelector('.shiny-toggle').classList.add('active');
                 isShiny = true;
+            }
+        }
+
+        // 🔊 Função para reproduzir o som do Pokémon
+        function playCry() {
+            const cryAudio = document.getElementById('pokemonCry');
+            if (cryAudio && cryAudio.src) {
+                cryAudio.currentTime = 0;
+                const playPromise = cryAudio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(err => {
+                        console.log('Erro ao reproduzir som:', err);
+                    });
+                }
             }
         }
 

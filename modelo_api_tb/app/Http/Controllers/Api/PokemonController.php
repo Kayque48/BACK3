@@ -52,6 +52,24 @@ class PokemonController extends Controller
 
                 if ($response->successful()) {
                     $pokemon = $response->json();
+                    
+                    // Garantir que a estrutura do cry existe
+                    if (!isset($pokemon['cry'])) {
+                        $pokemon['cry'] = ['latest' => null, 'legacy' => null];
+                    }
+                    if (!isset($pokemon['cry']['latest'])) {
+                        $pokemon['cry']['latest'] = null;
+                    }
+                    
+                    // Se o cry não tem URL, tentar buscar de uma fonte alternativa
+                    if (empty($pokemon['cry']['latest'])) {
+                        // Construir URL padrão de som da PokeAPI
+                        $pokemonId = $pokemon['id'] ?? null;
+                        if ($pokemonId) {
+                            $pokemon['cry']['latest'] = "https://raw.githubusercontent.com/PokeAPI/cries/main/previews/pokemon/{$pokemonId}.ogg";
+                            $pokemon['cry']['legacy'] = "https://raw.githubusercontent.com/PokeAPI/cries/main/previews/pokemon/{$pokemonId}.ogg";
+                        }
+                    }
                 } else {
                     return back()->with('erro', 'Pokémon não encontrado! Tente outro.');
                 }
@@ -93,13 +111,18 @@ class PokemonController extends Controller
                 ];
             }, $habilidades ?? []),
             'sprites' => [
-                'front_default' => $pokemonLocal->sprite,
+                'front_default' => $pokemonLocal->sprite ?? null,
+                'front_shiny' => $pokemonLocal->sprite_shiny ?? null,
                 'other' => [
                     'official-artwork' => [
-                        'front_default' => $pokemonLocal->sprite,
-                        'front_shiny' => null
+                        'front_default' => $pokemonLocal->sprite ?? null,
+                        'front_shiny' => $pokemonLocal->sprite_shiny ?? null
                     ]
                 ]
+            ],
+            'cry' => [
+                'latest' => $pokemonLocal->cry_url ?? null,
+                'legacy' => $pokemonLocal->cry_url ?? null
             ],
             'stats' => [
                 ['stat' => ['name' => 'hp'], 'base_stat' => $pokemonLocal->hp],

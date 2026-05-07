@@ -21,6 +21,8 @@ class PokemonController extends Controller
             'weight'          => 'required|integer',
             'base_experience' => 'required|integer',
             'sprite'          => 'required|url',
+            'sprite_shiny'    => 'nullable|url',
+            'cry_url'         => 'nullable|url',
             'types'           => 'required|array|min:1|max:2', // Valida a regra de até 2 tipos
             'abilities'       => 'nullable|string',
             'hp'              => 'required|integer|between:0,255',

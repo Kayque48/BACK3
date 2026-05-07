@@ -387,6 +387,38 @@
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    {{-- Sprite Shiny URL --}}
+                    <div>
+                        <label class="pixel-label" for="sprite_shiny">URL do Sprite Shiny ✨</label>
+                        <input
+                            type="url"
+                            id="sprite_shiny"
+                            name="sprite_shiny"
+                            class="pixel-input {{ $errors->has('sprite_shiny') ? 'error' : '' }}"
+                            value="{{ old('sprite_shiny') }}"
+                            placeholder="https://... (opcional)"
+                        >
+                        @error('sprite_shiny')
+                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Cry URL (som) --}}
+                    <div>
+                        <label class="pixel-label" for="cry_url">URL do Som 🔊</label>
+                        <input
+                            type="url"
+                            id="cry_url"
+                            name="cry_url"
+                            class="pixel-input {{ $errors->has('cry_url') ? 'error' : '' }}"
+                            value="{{ old('cry_url') }}"
+                            placeholder="https://... (opcional)"
+                        >
+                        @error('cry_url')
+                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
                 {{-- Tipos --}}

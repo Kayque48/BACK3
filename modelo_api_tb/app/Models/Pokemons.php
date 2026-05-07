@@ -25,6 +25,8 @@ class Pokemons extends Model
         'weight',
         'base_experience',
         'sprite',
+        'sprite_shiny',
+        'cry_url',
         'types',
         'abilities',
         'hp',
