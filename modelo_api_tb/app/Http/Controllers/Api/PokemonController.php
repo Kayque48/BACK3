@@ -29,9 +29,18 @@ class PokemonController extends Controller
             // Tenta buscar por nome
             $pokemonLocal = Pokemons::where('name', 'LIKE', "%{$nomeOuId}%")->first();
             
-            // Se não encontrou por nome e o termo é numérico, tenta buscar por ID
+            // 🔧 CORREÇÃO: Se não encontrou por nome e o termo é numérico, tenta buscar por ID ou external_id
+            // Busca primeiro na tabela local pelos IDs recém criados (external_id > 9999)
             if (!$pokemonLocal && is_numeric($nomeOuId)) {
-                $pokemonLocal = Pokemons::find((int)$nomeOuId);
+                $numericoId = (int)$nomeOuId;
+                
+                // Primeiro tenta buscar pelo external_id (para novos Pokémons customizados)
+                $pokemonLocal = Pokemons::where('external_id', $numericoId)->first();
+                
+                // Se não achou, tenta pelo ID registrado (para compatibilidade com estrutura anterior)
+                if (!$pokemonLocal) {
+                    $pokemonLocal = Pokemons::find($numericoId);
+                }
             }
             
             if ($pokemonLocal) {
@@ -60,8 +69,11 @@ class PokemonController extends Controller
         $tipos = is_array($pokemonLocal->types) ? $pokemonLocal->types : json_decode($pokemonLocal->types, true);
         $habilidades = is_array($pokemonLocal->abilities) ? $pokemonLocal->abilities : json_decode($pokemonLocal->abilities, true);
 
+        // 🔧 CORREÇÃO: Usar external_id se existir (para novos Pokémons), senão usar id
+        $idExibicao = $pokemonLocal->external_id ?? $pokemonLocal->id;
+
         return [
-            'id' => $pokemonLocal->id,
+            'id' => $idExibicao,
             'name' => $pokemonLocal->name,
             'height' => $pokemonLocal->height,
             'weight' => $pokemonLocal->weight,

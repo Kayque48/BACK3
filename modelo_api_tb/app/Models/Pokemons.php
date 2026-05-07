@@ -16,4 +16,23 @@ class Pokemons extends Model
         'types' => 'array',
         'abilities' => 'array',
     ];
+
+    // 🔧 Adicionar o external_id como fillable para que possa ser preenchido em mass assignment
+    protected $fillable = [
+        'name',
+        'generation',
+        'height',
+        'weight',
+        'base_experience',
+        'sprite',
+        'types',
+        'abilities',
+        'hp',
+        'attack',
+        'defense',
+        'special_attack',
+        'special_defense',
+        'speed',
+        'external_id',
+    ];
 }

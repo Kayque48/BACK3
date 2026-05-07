@@ -37,6 +37,11 @@ class PokemonController extends Controller
             $dados['abilities'] = [];
         }
 
+        // 🔧 CORREÇÃO: Atribuir um external_id começando em 10000 para evitar conflito com a PokeAPI
+        // A PokeAPI tem Pokémons com IDs de 1 a ~1025, então usamos 10000+ para customizados
+        $ultimoExternalId = \App\Models\Pokemons::max('external_id') ?? 9999;
+        $dados['external_id'] = $ultimoExternalId + 1;
+
         \App\Models\Pokemons::create($dados);
 
         return back()->with('sucesso', 'Pokémon cadastrado com sucesso!');
