@@ -281,7 +281,7 @@
         {{-- Card principal --}}
         <div class="pokedex-card p-6 md:p-8">
 
-            <form action="{{ route('pokemon.store') }}" method="POST">
+            <form action="{{ route('pokemon.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 {{-- SEÇÃO 1: Informações Básicas --}}
@@ -372,53 +372,40 @@
                         @enderror
                     </div>
 
-                    {{-- Sprite URL --}}
+                    {{-- Sprite (Arquivo) --}}
                     <div>
-                        <label class="pixel-label" for="sprite">URL do Sprite</label>
+                        <label class="pixel-label" for="sprite">Imagem do Sprite</label>
                         <input
-                            type="url"
+                            type="file"
                             id="sprite"
                             name="sprite"
                             class="pixel-input {{ $errors->has('sprite') ? 'error' : '' }}"
-                            value="{{ old('sprite') }}"
-                            placeholder="https://..."
+                            accept="image/jpeg,image/png,image/gif,image/webp"
+                            required
                         >
+                        <p class="text-sm text-gray-600 mt-1">Formatos: JPEG, PNG, GIF ou WebP (máx: 5MB)</p>
                         @error('sprite')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
 
-                    {{-- Sprite Shiny URL --}}
+                    {{-- Sprite Shiny (Arquivo) --}}
                     <div>
-                        <label class="pixel-label" for="sprite_shiny">URL do Sprite Shiny ✨</label>
+                        <label class="pixel-label" for="sprite_shiny">Sprite Shiny ✨</label>
                         <input
-                            type="url"
+                            type="file"
                             id="sprite_shiny"
                             name="sprite_shiny"
                             class="pixel-input {{ $errors->has('sprite_shiny') ? 'error' : '' }}"
-                            value="{{ old('sprite_shiny') }}"
-                            placeholder="https://... (opcional)"
+                            accept="image/jpeg,image/png,image/gif,image/webp"
                         >
+                        <p class="text-sm text-gray-600 mt-1">Opcional - Formatos: JPEG, PNG, GIF ou WebP (máx: 5MB)</p>
                         @error('sprite_shiny')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
 
-                    {{-- Cry URL (som) --}}
-                    <div>
-                        <label class="pixel-label" for="cry_url">URL do Som 🔊</label>
-                        <input
-                            type="url"
-                            id="cry_url"
-                            name="cry_url"
-                            class="pixel-input {{ $errors->has('cry_url') ? 'error' : '' }}"
-                            value="{{ old('cry_url') }}"
-                            placeholder="https://... (opcional)"
-                        >
-                        @error('cry_url')
-                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
+
                 </div>
 
                 {{-- Tipos --}}
