@@ -33,9 +33,9 @@ Busca por ID "1" → Encontra Pokémon customizado (ID 1 do banco)
 - **O quê**: Ao criar novo Pokémon, atribui `external_id` começando em 10.000
 - **Código**:
 ```php
-// Novos Pokémons customizados recebem external_id > 10.000
-$ultimoExternalId = Pokemons::max('external_id') ?? 9999;
-$dados['external_id'] = $ultimoExternalId + 1;  // 10000, 10001, 10002...
+// Novos Pokémons customizados recebem external_id > 5.000
+$ultimoExternalId = Pokemons::max('external_id') ?? 4999;
+$dados['external_id'] = $ultimoExternalId + 1;  // 5000, 5001, 5002...
 ```
 
 ### 3. **Atualização do ApiPokemonController**
@@ -57,7 +57,7 @@ $dados['external_id'] = $ultimoExternalId + 1;  // 10000, 10001, 10002...
 ```
 Usuário busca por ID → 
   ↓
-Busca no banco pelo external_id (10000+)
+Busca no banco pelo external_id (5000+)
   ├─ ✅ É Pokémon customizado? Exibe informações customizadas
   └─ ❌ Não encontrou?
       ↓
@@ -73,9 +73,9 @@ Busca no banco pelo external_id (10000+)
 ### Exemplo 1: Novo Pokémon Customizado
 ```
 1. Cria novo Pokémon "Dragonitico"
-   → external_id = 10000
+   → external_id = 5000
 
-2. Busca por: "10000"
+2. Busca por: "5000"
    → Encontra "Dragonitico"
    ✅ Sucesso!
 
@@ -111,11 +111,11 @@ php artisan migrate
 ```
 
 2. **Testar a criação** de um novo Pokémon:
-- Valor do `external_id` deve ser 10000 ou maior
+- Valor do `external_id` deve ser 5000 ou maior
 - Procure em sua base de dados: `SELECT * FROM _pokemons WHERE external_id IS NOT NULL;`
 
 3. **Testar a busca** por ID:
-- Busque por 10000 (seu novo Pokémon)
+- Busque por 5000 (seu novo Pokémon)
 - Busque por 1 (Bulbasaur da API)
 - Ambos devem funcionar perfeitamente
 
@@ -126,7 +126,7 @@ php artisan migrate
 | Aspecto | Status | Detalhes |
 |---------|--------|----------|
 | **IDs da PokeAPI** | ✅ Preservados | 1-1025+ |
-| **IDs Customizados** | ✅ Isolados | 10000+ |
+| **IDs Customizados** | ✅ Isolados | 5000+ |
 | **Conflito de IDs** | ✅ Resolvido | Espaço separado |
 | **Busca por Nome** | ✅ Funciona | Sem mudanças |
 | **Busca por ID** | ✅ Aprimorada | Dois bancos diferentes |

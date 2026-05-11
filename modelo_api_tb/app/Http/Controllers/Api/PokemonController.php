@@ -30,7 +30,7 @@ class PokemonController extends Controller
             $pokemonLocal = Pokemons::where('name', 'LIKE', "%{$nomeOuId}%")->first();
             
             // 🔧 CORREÇÃO: Se não encontrou por nome e o termo é numérico, tenta buscar por ID ou external_id
-            // Busca primeiro na tabela local pelos IDs recém criados (external_id > 9999)
+            // Busca primeiro na tabela local pelos IDs recém criados (external_id > 4999)
             if (!$pokemonLocal && is_numeric($nomeOuId)) {
                 $numericoId = (int)$nomeOuId;
                 
@@ -48,28 +48,10 @@ class PokemonController extends Controller
                 $pokemon = $this->converterModeloParaArray($pokemonLocal);
             } else {
                 // PASSO 2: Se não encontrar no banco, buscar na PokeAPI
-                $response = Http::get("https://pokeapi.co/api/v2/pokemon/{$nomeOuId}");
+                $response = Http::WithoutVerifying()->get("https://pokeapi.co/api/v2/pokemon/{$nomeOuId}");
 
                 if ($response->successful()) {
                     $pokemon = $response->json();
-                    
-                    // Garantir que a estrutura do cry existe
-                    if (!isset($pokemon['cry'])) {
-                        $pokemon['cry'] = ['latest' => null, 'legacy' => null];
-                    }
-                    if (!isset($pokemon['cry']['latest'])) {
-                        $pokemon['cry']['latest'] = null;
-                    }
-                    
-                    // Se o cry não tem URL, tentar buscar de uma fonte alternativa
-                    if (empty($pokemon['cry']['latest'])) {
-                        // Construir URL padrão de som da PokeAPI
-                        $pokemonId = $pokemon['id'] ?? null;
-                        if ($pokemonId) {
-                            $pokemon['cry']['latest'] = "https://raw.githubusercontent.com/PokeAPI/cries/main/previews/pokemon/{$pokemonId}.ogg";
-                            $pokemon['cry']['legacy'] = "https://raw.githubusercontent.com/PokeAPI/cries/main/previews/pokemon/{$pokemonId}.ogg";
-                        }
-                    }
                 } else {
                     return back()->with('erro', 'Pokémon não encontrado! Tente outro.');
                 }
@@ -119,10 +101,6 @@ class PokemonController extends Controller
                         'front_shiny' => $pokemonLocal->sprite_shiny ?? null
                     ]
                 ]
-            ],
-            'cry' => [
-                'latest' => $pokemonLocal->cry_url ?? null,
-                'legacy' => $pokemonLocal->cry_url ?? null
             ],
             'stats' => [
                 ['stat' => ['name' => 'hp'], 'base_stat' => $pokemonLocal->hp],
