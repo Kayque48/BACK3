@@ -10,6 +10,7 @@ use App\Filament\Resources\Pedidos\Schemas\PedidoForm;
 use App\Filament\Resources\Pedidos\Schemas\PedidoInfolist;
 use App\Filament\Resources\Pedidos\Tables\PedidosTable;
 use App\Models\Pedido;
+use App\Models\Produto;
 use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -60,7 +61,8 @@ class PedidoResource extends Resource
                 TextInput::make('total')
                     ->label('Valor Total')
                     ->numeric()
-                    ->prefix('R$ '),
+                    ->prefix('R$ ')
+                    ->readOnly(),
 
                 Repeater::make('itens')
                     ->relationship('itens') // Garantir a relação do banco
@@ -71,7 +73,20 @@ class PedidoResource extends Resource
                             ->preload()
                             ->required()
                             ->label('Produto')
-                            ->columnSpan(2),
+                            ->columnSpan(2)
+                            ->live()
+                            ->afterStateUpdated(function (Get $get, Set $set, $state) {
+                                // Busca o produto selecionado
+                                if ($state) {
+                                    $produto = Produto::find($state);
+                                    if ($produto) {
+                                        // Preenche o preço unitário automaticamente
+                                        $set('preco_unitario', $produto->preco);
+                                    }
+                                }
+                                // Recalcula o total
+                                self::calcularTotal($get, $set);
+                            }),
 
                         TextInput::make('quantidade')
                             ->label('Quantidade')
@@ -159,20 +174,20 @@ class PedidoResource extends Resource
 
     public static function calcularTotal(Get $get, Set $set): void
     {
-        
-        // Pega todos os intes que estão no Repeater naquele momento
+        // Pega todos os itens que estão no Repeater naquele momento
         $itens = $get('itens') ?? [];
         $total = 0;
 
         // Passa por cada linha somando (quantidade * preco)
         foreach ($itens as $item) {
-            $quantidade = (float) ($item['quantidade'] ?? 0);
-            $preco = (float) ($item['preco_unitario'] ?? 0);
-
-            $total += $quantidade * $preco;
+            if (isset($item['quantidade']) && isset($item['preco_unitario'])) {
+                $quantidade = (float) $item['quantidade'];
+                $preco = (float) $item['preco_unitario'];
+                $total += $quantidade * $preco;
+            }
         }
 
-        // joga o resultado de volta lá no campo 'total'
-        $set('total', number_format($total, 2, ',', '.'));
+        // Formata o total com 2 casas decimais
+        $set('total', round($total, 2));
     }
 }

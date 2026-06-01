@@ -17,6 +17,25 @@ class Pokemons extends Model
         'abilities' => 'array',
     ];
 
+    // 🔧 Métodos para acessar as URLs dos arquivos armazenados
+    public function getSpriteUrl()
+    {
+        if ($this->sprite_file) {
+            return asset('storage/' . $this->sprite_file);
+        }
+        return $this->sprite; // Fallback para URL se existir
+    }
+
+    public function getSpriteShinyUrl()
+    {
+        if ($this->sprite_shiny_file) {
+            return asset('storage/' . $this->sprite_shiny_file);
+        }
+        return $this->sprite_shiny; // Fallback para URL se existir
+    }
+
+
+
     // 🔧 Adicionar o external_id como fillable para que possa ser preenchido em mass assignment
     protected $fillable = [
         'name',
@@ -25,7 +44,12 @@ class Pokemons extends Model
         'weight',
         'base_experience',
         'sprite',
+        'sprite_file',
         'sprite_shiny',
+<<<<<<< HEAD
+=======
+        'sprite_shiny_file',
+>>>>>>> cc3fbae19e555af761bb51dcfe44052b69c27521
         'types',
         'abilities',
         'hp',

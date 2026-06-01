@@ -93,15 +93,22 @@ class PokemonController extends Controller
                 ];
             }, $habilidades ?? []),
             'sprites' => [
-                'front_default' => $pokemonLocal->sprite ?? null,
-                'front_shiny' => $pokemonLocal->sprite_shiny ?? null,
+                'front_default' => $pokemonLocal->sprite_file ? asset('storage/' . $pokemonLocal->sprite_file) : $pokemonLocal->sprite,
+                'front_shiny' => $pokemonLocal->sprite_shiny_file ? asset('storage/' . $pokemonLocal->sprite_shiny_file) : $pokemonLocal->sprite_shiny,
                 'other' => [
                     'official-artwork' => [
-                        'front_default' => $pokemonLocal->sprite ?? null,
-                        'front_shiny' => $pokemonLocal->sprite_shiny ?? null
+                        'front_default' => $pokemonLocal->sprite_file ? asset('storage/' . $pokemonLocal->sprite_file) : $pokemonLocal->sprite,
+                        'front_shiny' => $pokemonLocal->sprite_shiny_file ? asset('storage/' . $pokemonLocal->sprite_shiny_file) : $pokemonLocal->sprite_shiny
                     ]
                 ]
             ],
+<<<<<<< HEAD
+=======
+            'cry' => [
+                'latest' => null,
+                'legacy' => null
+            ],
+>>>>>>> cc3fbae19e555af761bb51dcfe44052b69c27521
             'stats' => [
                 ['stat' => ['name' => 'hp'], 'base_stat' => $pokemonLocal->hp],
                 ['stat' => ['name' => 'attack'], 'base_stat' => $pokemonLocal->attack],
